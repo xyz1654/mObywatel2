@@ -14,8 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const issueDate = document.getElementById("issueDateMain").value.trim();
         const fathername = document.getElementById("fathername").value.trim();
         const mothername = document.getElementById("mothername").value.trim();
+        const address = document.getElementById("addressInput").value.trim();
+        const postalcode = document.getElementById("postalCodeInput").value.trim();
 
-        // Wyliczenie daty ważności (+10 lat)
+        // Wyliczenie daty ważności (+10 lat od wydania)
         let expiryDate = "";
         if (issueDate.includes(".")) {
             const parts = issueDate.split(".");
@@ -42,6 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (expiryDate) localStorage.setItem("expiryDateMain", expiryDate);
         if (fathername) localStorage.setItem("fatherNameMain", fathername.toUpperCase());
         if (mothername) localStorage.setItem("motherNameMain", mothername.toUpperCase());
+        if (address) localStorage.setItem("address", address.toUpperCase());
+        if (postalcode) localStorage.setItem("postalcode", postalcode.toUpperCase());
 
         localStorage.removeItem("pesel");
         localStorage.removeItem("idSeriesMain");
