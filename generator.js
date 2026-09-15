@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("generator-form");
-
     if (!form) return;
 
     form.addEventListener("submit", function (e) {
@@ -16,23 +15,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const mothername = document.getElementById("mothername").value.trim();
         const address = document.getElementById("addressInput").value.trim();
         const postalcode = document.getElementById("postalCodeInput").value.trim();
+        const photoInput = document.getElementById("photoFile");
 
-        // Wyliczenie daty ważności (+10 lat od wydania)
         let expiryDate = "";
         if (issueDate.includes(".")) {
             const parts = issueDate.split(".");
             if (parts.length === 3) {
-                const year = parseInt(parts[2], 10) + 10;
-                expiryDate = `${parts[0]}.${parts[1]}.${year}`;
+                expiryDate = `${parts[0]}.${parts[1]}.${parseInt(parts[2], 10) + 10}`;
             }
         }
 
         if (name) localStorage.setItem("name", name.toUpperCase());
         if (surname) {
-            const upperSurname = surname.toUpperCase();
-            localStorage.setItem("surname", upperSurname);
-            localStorage.setItem("lastName", upperSurname);        
-            localStorage.setItem("fatherSurname", upperSurname);  
+            const upper = surname.toUpperCase();
+            localStorage.setItem("surname", upper);
+            localStorage.setItem("lastName", upper);        
+            localStorage.setItem("fatherSurname", upper);  
         }
         if (birthDate) {
             localStorage.setItem("birthDate", birthDate);
@@ -47,9 +45,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (address) localStorage.setItem("address", address.toUpperCase());
         if (postalcode) localStorage.setItem("postalcode", postalcode.toUpperCase());
 
-        localStorage.removeItem("pesel");
-        localStorage.removeItem("idSeriesMain");
-
-        window.location.href = "index.html";
+        // Jeśli wybrano zdjęcie, przekształć je na kod i zapisz w pamięci
+        if (photoInput && photoInput.files && photoInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                localStorage.setItem("profilePhoto", event.target.result);
+                window.location.href = "dowod.html";
+            };
+            reader.readAsDataURL(photoInput.files[0]);
+        } else {
+            window.location.href = "dowod.html";
+        }
     });
 });
