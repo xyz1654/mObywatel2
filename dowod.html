@@ -2,96 +2,374 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mDowód</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        
-        /* Pełny ekran, brak marginesów tła jak w prawdziwej apce */
-        body { 
-            background-color: #f2f2f7; 
-            color: #000; 
-            padding: 0; 
-            margin: 0; 
-            display: flex; 
-            flex-direction: column; 
+        :root {
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --accent: #1d4ed8;
+            --border: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
         }
 
-        /* Górny pasek aplikacji (np. mDowód + godzina) */
-        .app-header {
+        .phone-container {
+            width: 100%;
+            max-width: 420px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .top-bar {
             background-color: #ffffff;
-            padding: 14px 16px;
-            font-size: 17px;
-            font-weight: 600;
-            border-bottom: 1px solid #e5e5ea;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 16px;
         }
 
-        /* Główny kontener zajmujący całą przestrzeń */
-        .main-content {
-            padding: 16px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        /* Karta dokumentu na całą szerokość */
-        .card {
-            background-color: #ffffff;
-            border-radius: 14px;
+        .card-body {
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
         }
 
-        .photo-section { 
-            display: flex; 
-            gap: 16px; 
-            align-items: center; 
+        .photo-section {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 24px;
         }
 
-        .photo-box { 
-            width: 110px; 
-            height: 140px; 
-            border-radius: 10px; 
-            overflow: hidden; 
-            background-color: #e5e5ea; 
-            flex-shrink: 0; 
+        .photo-box {
+            width: 110px;
+            height: 140px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #e5e7eb;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
         }
 
-        .photo-box img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            display: block; 
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
-        .user-names h2 { font-size: 22px; font-weight: 700; color: #1c1c1e; }
-        .user-names p { font-size: 16px; font-weight: 600; color: #3a3a3c; margin-top: 2px; }
-        .user-names .nationality { font-size: 13px; color: #007aff; font-weight: 600; margin-top: 4px; text-transform: uppercase; }
+        .user-names h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .user-names p {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
 
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid #efeff4;
+            margin-bottom: 20px;
         }
 
-        .info-item label { font-size: 11px; color: #8e8e93; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 2px; }
-        .info-item span { font-size: 15px; font-weight: 600; color: #1c1c1e; }
+        .info-item label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .info-item span {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .section-divider {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid var(--border);
+        }
 
         .update-box {
-            background-color: #ffffff;
-            border-radius: 14px;
+            background-color: #f9fafb;
             padding: 14px 16px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+        }
+
+        .update-box span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .update-box button {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .extra-toggle-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #f3f4f6;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .extra-content {
+            display: none;
+            background-color: #f9fafb;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="top-bar">
+            <span>mDowód</span>
+            <span id="clock">--:--:--</span>
+        </div>
+
+        <div class="card-body">
+            <div class="photo-section">
+                <div class="photo-box">
+                    <img id="profileImage" alt="Zdjęcie">
+                </div>
+                <div class="user-names">
+                    <h2 id="display-name">JAN</h2>
+                    <p id="display-surname">KOWALSKI</p>
+                    <p style="font-size: 12px; color: var(--accent); margin-top: 6px;" id="display-nationality">POLSKIE</p>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item full-width">
+                    <label>Numer PESEL</label>
+                    <span id="display-pesel">08281512345</span>
+                </div>
+                <div class="info-item">
+                    <label>Data urodzenia</label>
+                    <span id="display-birthDate">15.08.2008</span>
+                </div>
+                <div class="info-item">
+                    <label>Seria i numer</label>
+                    <span id="idSeriesMain">ABC 123456</span>
+                </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <div class="update-box">
+                <div>
+                    <label style="font-size: 11px; color: var(--text-muted); display:block;">Ostatnia aktualizacja</label>
+                    <span id="lastUpdateData">--.--.----</span>
+                </div>
+                <button id="aktualizuj">Aktualizuj</button>
+            </div>
+
+            <button class="extra-toggle-btn" id="extra-toggle">
+                <span>Więcej danych</span>
+                <span id="extra-arrow">▼</span>
+            </button>
+
+            <div class="extra-content" id="extra-content">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Ważność</label>
+                        <span id="expiryDateMain">20.05.2034</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Data wydania</label>
+                        <span id="issueDateMain">20.05.2024</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Imię ojca</label>
+                        <span id="fathernameMain">PIOTR</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Imię matki</label>
+                        <span id="mothernameMain">ANNA</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Nazwisko rodowe</label>
+                        <span id="lastName">KOWALSKI</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Płeć</label>
+                        <span id="gender">MĘŻCZYZNA</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Nazwisko rodowe ojca</label>
+                        <span id="fatherSurname">KOWALSKI</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Nazwisko rodowe matki</label>
+                        <span id="motherSurname">KOWALSKA</span>
+                    </div>
+                    <div class="info-item full-width">
+                        <label>Miejsce urodzenia</label>
+                        <span id="placeOfBirth">GDYNIA</span>
+                    </div>
+                    <div class="info-item full-width">
+                        <label>Adres zameldowania na pobyt stały</label>
+                        <span id="address">UL. MORSKA 10/12</span>
+                    </div>
+                    <div class="info-item full-width">
+                        <label>Kod pocztowy i miejscowość</label>
+                        <span id="postalcode">81-001 GDYNIA</span>
+                    </div>
+                    <div class="info-item full-width">
+                        <label>Data zameldowania</label>
+                        <span id="registrationDate">15.08.2008</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Wczytywanie danych z localStorage do pól
+            const fields = [
+                "name", "surname", "nationality", "birthDate", "pesel", 
+                "idSeriesMain", "expiryDateMain", "issueDateMain", 
+                "fatherNameMain", "motherNameMain", "lastName", "gender", 
+                "fatherSurname", "motherSurname", "placeOfBirth", 
+                "address", "postalcode", "registrationDate"
+            ];
+
+            fields.forEach(key => {
+                let elId = key;
+                if (["name", "surname", "nationality", "birthDate", "pesel"].includes(key)) {
+                    elId = "display-" + key;
+                } else if (key === "fatherNameMain") elId = "fathernameMain"; 
+                else if (key === "motherNameMain") elId = "mothernameMain";
+                
+                const element = document.getElementById(elId);
+                const value = localStorage.getItem(key);
+                
+                if (element && value) {
+                    element.textContent = value.toUpperCase();
+                }
+            });
+
+            // Wczytywanie zdjęcia z pamięci
+            const savedPhoto = localStorage.getItem("profilePhoto");
+            const imgEl = document.getElementById("profileImage");
+            if (savedPhoto && imgEl) {
+                imgEl.src = savedPhoto;
+            }
+
+            // Obsługa rozwijania sekcji "Więcej danych"
+            const toggleBtn = document.getElementById("extra-toggle");
+            const contentDiv = document.getElementById("extra-content");
+            const arrowImg = document.getElementById("extra-arrow");
+
+            if (toggleBtn && contentDiv) {
+                toggleBtn.addEventListener("click", function () {
+                    if (contentDiv.style.display === "block") {
+                        contentDiv.style.display = "none";
+                        if(arrowImg) arrowImg.style.transform = "rotate(0deg)";
+                    } else {
+                        contentDiv.style.display = "block";
+                        if(arrowImg) arrowImg.style.transform = "rotate(180deg)";
+                    }
+                });
+            }
+
+            // Obsługa przycisku aktualizuj
+            const lastUpdateEl = document.getElementById("lastUpdateData");
+            const btnUpdate = document.getElementById("aktualizuj");
+            
+            function setNowDate() {
+                const d = new Date();
+                const pad = (n) => (n < 10 ? "0" + n : "" + n);
+                return pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + d.getFullYear();
+            }
+
+            const savedDate = localStorage.getItem("lastUpdateDate");
+            if (lastUpdateEl) {
+                lastUpdateEl.textContent = savedDate || setNowDate();
+            }
+
+            if (btnUpdate) {
+                btnUpdate.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const now = setNowDate();
+                    if (lastUpdateEl) {
+                        lastUpdateEl.textContent = now;
+                    }
+                    localStorage.setItem("lastUpdateDate", now);
+                });
+            }
+        });
+
+        // Zegarek na górnym pasku
+        const czasEl = document.getElementById("clock");
+        function updateClockNow() {
+            const now = new Date();
+            const pad = (n) => (n < 10 ? `0${n}` : `${n}`);
+            if (czasEl) {
+                czasEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+            }
+        }
+        setInterval(updateClockNow, 1000);
+        updateClockNow();
+    </script>
+</body>
+</html>
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
         }
 
