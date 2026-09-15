@@ -1,10 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ==========================================
-    // 1. GENERATORY PESEL ORAZ NUMERU DOWODU (TYLKO AUTOMAT)
-    // ==========================================
-    
-    // Generator serii i numeru dowodu (np. ABC 123456)
     function generateIdSeries() {
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const l1 = letters.charAt(Math.floor(Math.random() * 26));
@@ -14,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return `${l1}${l2}${l3} ${num}`;
     }
 
-    // Generator poprawnego matematycznie PESEL-u na podstawie daty urodzenia
     function generatePeselFromBirthdate(birthDateStr, isMale) {
         if (!birthDateStr || !birthDateStr.includes(".")) {
             birthDateStr = "15.08.1998";
@@ -29,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const pYear = String(year).slice(-2);
         let pMonth = month;
         if (year >= 2000 && year < 2100) {
-            pMonth += 20; // W PESEL dla osób urodzonych po 2000 r. dodaje się 20 do miesiąca
+            pMonth += 20;
         }
 
         const random3Digits = Math.floor(100 + Math.random() * 899);
@@ -46,37 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return rawPesel + controlDigit;
     }
 
-    // ==========================================
-    // 2. ODBIÓR DANYCH Z URL (BEZ PESELU I NR DOWODU)
-    // ==========================================
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.toString().length > 0) {
-        // Ignorujemy wszelkie próby przekazania peselu i nr dowodu w linku
-        const urlData = {
-            name: urlParams.get('name') || urlParams.get('imie'),
-            surname: urlParams.get('surname') || urlParams.get('nazwisko'),
-            nationality: urlParams.get('nationality') || urlParams.get('obywatelstwo'),
-            birthDate: urlParams.get('birthDate') || urlParams.get('birthdate') || urlParams.get('dataUrodzenia'),
-            fatherNameMain: urlParams.get('fathername') || urlParams.get('imieOjca'),
-            motherNameMain: urlParams.get('mothername') || urlParams.get('imieMatki'),
-            gender: urlParams.get('gender') || urlParams.get('plec')
-        };
-
-        Object.keys(urlData).forEach(key => {
-            if (urlData[key]) localStorage.setItem(key, urlData[key].toUpperCase());
-        });
-
-        // Wymuszenie wygenerowania nowego PESEL i Nr Dowodu na podstawie danych z URL
-        localStorage.removeItem("pesel");
-        localStorage.removeItem("idSeriesMain");
-
-        // Czyszczenie paska adresu
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
-    // ==========================================
-    // 3. SPRAWDZENIE I INICJALIZACJA DANYCH
-    // ==========================================
     function initializeData() {
         var pad = (n) => (n < 10 ? "0" + n : "" + n);
         
@@ -92,19 +55,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let gender = localStorage.getItem("gender") || "KOBIETA";
         let isMale = gender.toUpperCase().startsWith("M");
 
-        // Jeśli PESEL nie istnieje lub jest uszkodzony, generuj automatycznie
         if (!localStorage.getItem("pesel") || localStorage.getItem("pesel").length !== 11) {
             const autoPesel = generatePeselFromBirthdate(birthDate, isMale);
             localStorage.setItem("pesel", autoPesel);
         }
 
-        // Jeśli Numer Dowodu nie istnieje, generuj automatycznie
         if (!localStorage.getItem("idSeriesMain")) {
             const autoId = generateIdSeries();
             localStorage.setItem("idSeriesMain", autoId);
         }
 
-        // Domyślne wartości reszty pól
         const defaults = {
             name: isMale ? "JAKUB" : "ZUZANNA",
             surname: isMale ? "KOWALSKI" : "LEWANDOWSKA",
@@ -130,9 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ==========================================
-    // 4. WYPEŁNIANIE WIDOKU HTML
-    // ==========================================
     function populateData() {
         const fields = [
             "name", "surname", "nationality", "birthDate", "pesel", 
@@ -158,9 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ==========================================
-    // 5. ŁADOWANIE ZDJĘCIA
-    // ==========================================
     function loadProfileImage() {
         const imgElement = document.getElementById("profileImage");
         if (!imgElement) return;
@@ -180,9 +134,6 @@ document.addEventListener("DOMContentLoaded", function () {
         imgElement.style.opacity = "1";
     }
 
-    // ==========================================
-    // 6. OBSŁUGA AKORDEONU (ZAKŁADKA)
-    // ==========================================
     const toggleBtn = document.getElementById("extra-toggle");
     const contentDiv = document.getElementById("extra-content");
     const arrowImg = document.getElementById("extra-arrow");
@@ -200,9 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ==========================================
-    // 7. OBSŁUGA AKTUALIZACJI CZASU
-    // ==========================================
     const lastUpdateEl = document.getElementById("lastUpdateData"); 
     const btnUpdate = document.getElementById("aktualizuj");
     
@@ -226,13 +174,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Uruchomienie procedury
     initializeData();
     populateData();
     loadProfileImage();
 });
 
-// Zegar w nagłówku
 const czasEl = document.getElementById("clock") || document.querySelector(".czas");
 function updateClockNow() {
     const now = new Date();
