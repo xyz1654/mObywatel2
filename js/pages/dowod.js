@@ -12,6 +12,7 @@ async function applyProfileImage() {
 
     profileImage.src = "assets/moje_zdjecie.png";
     profileImage.style.opacity = "1";
+    profileImage.style.display = "block";
   } catch (err) {
     console.error("Błąd ładowania zdjęcia:", err);
   }
@@ -239,3 +240,4 @@ if (czasEl) {
   updateClockNow();
   setInterval(updateClockNow, 1000);
 }
+
