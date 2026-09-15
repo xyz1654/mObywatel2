@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!form) return;
 
     form.addEventListener("submit", function (e) {
-        e.preventDefault(); // Powstrzymuje odświeżenie strony
+        e.preventDefault();
 
         const name = document.getElementById("name").value.trim();
         const surname = document.getElementById("surname").value.trim();
@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const fathername = document.getElementById("fathername").value.trim();
         const mothername = document.getElementById("mothername").value.trim();
 
-        // Zapis do pamięci przeglądarki
         if (name) localStorage.setItem("name", name.toUpperCase());
         if (surname) localStorage.setItem("surname", surname.toUpperCase());
         if (birthDate) localStorage.setItem("birthDate", birthDate);
@@ -21,11 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (fathername) localStorage.setItem("fatherNameMain", fathername.toUpperCase());
         if (mothername) localStorage.setItem("motherNameMain", mothername.toUpperCase());
 
-        // Wymuszenie ponownego przeliczenia PESEL-u i serii dowodu
         localStorage.removeItem("pesel");
         localStorage.removeItem("idSeriesMain");
 
-        // Przejście do mDowodu
         window.location.href = "index.html";
     });
 });
