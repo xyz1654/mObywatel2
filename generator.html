@@ -5,91 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generator mDowodu</title>
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent: #2563eb;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --input-bg: #0f172a;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .container { width: 100%; max-width: 600px; background-color: var(--card-bg); border-radius: 16px; padding: 24px; border: 1px solid var(--border); }
-        .header { text-align: center; margin-bottom: 20px; }
-        .form-group { display: flex; flex-direction: column; margin-bottom: 14px; }
-        label { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; background-color: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text-main); font-size: 15px; outline: none; }
-        button { width: 100%; padding: 14px; background-color: var(--accent); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background-color: #0f172a; color: #fff; padding: 20px; display: flex; justify-content: center; }
+        .form-card { width: 100%; max-width: 400px; background: #1e293b; padding: 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        h2 { margin-bottom: 20px; text-align: center; font-size: 20px; }
+        .group { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; text-transform: uppercase; }
+        input { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 15px; outline: none; }
+        button { width: 100%; padding: 14px; background: #2563eb; color: #fff; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h2>Generator mDowodu</h2>
-        </div>
-        <form id="generator-form">
-            <div class="form-group">
-                <label for="photoFile">Zdjęcie profilowe</label>
-                <input type="file" id="photoFile" accept="image/*" required>
+    <div class="form-card">
+        <h2>Generator mDowodu</h2>
+        <form id="gen-form">
+            <div class="group">
+                <label>Zdjęcie profilowe</label>
+                <input type="file" id="photo" accept="image/*" required>
             </div>
-            <div class="form-group">
-                <label for="name">Imię</label>
-                <input type="text" id="name" placeholder="np. JAN" required>
+            <div class="group">
+                <label>Imię (Imiona)</label>
+                <input type="text" id="name" value="OSKAR" required>
             </div>
-            <div class="form-group">
-                <label for="surname">Nazwisko</label>
-                <input type="text" id="surname" placeholder="np. KOWALSKI" required>
+            <div class="group">
+                <label>Nazwisko</label>
+                <input type="text" id="surname" value="CZERWIŃSKI" required>
             </div>
-            <div class="form-group">
-                <label for="birthDate">Data urodzenia</label>
-                <input type="text" id="birthDate" placeholder="DD.MM.YYYY" required>
+            <div class="group">
+                <label>PESEL</label>
+                <input type="text" id="pesel" value="08281781515" required>
             </div>
-            <button type="submit">Generuj i przejdź</button>
+            <div class="group">
+                <label>Data Urodzenia</label>
+                <input type="text" id="birthDate" value="17.08.2008" required>
+            </div>
+            <div class="group">
+                <label>Seria i Numer</label>
+                <input type="text" id="idSeries" value="TCE 379079" required>
+            </div>
+            <button type="submit">Generuj mDowód</button>
         </form>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("generator-form");
-            if (!form) return;
+        document.getElementById("gen-form").addEventListener("submit", function (e) {
+            e.preventDefault();
 
-            form.addEventListener("submit", function (e) {
-                e.preventDefault();
-                const name = document.getElementById("name").value.trim();
-                const surname = document.getElementById("surname").value.trim();
-                const birthDate = document.getElementById("birthDate").value.trim();
-                const photoInput = document.getElementById("photoFile");
+            // Zapis danych tekstowych
+            localStorage.setItem("m_name", document.getElementById("name").value.toUpperCase());
+            localStorage.setItem("m_surname", document.getElementById("surname").value.toUpperCase());
+            localStorage.setItem("m_pesel", document.getElementById("pesel").value);
+            localStorage.setItem("m_birthDate", document.getElementById("birthDate").value);
+            localStorage.setItem("m_idSeries", document.getElementById("idSeries").value.toUpperCase());
 
-                if (name) localStorage.setItem("name", name.toUpperCase());
-                if (surname) localStorage.setItem("surname", surname.toUpperCase());
-                if (birthDate) localStorage.setItem("birthDate", birthDate);
+            const fileInput = document.getElementById("photo");
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    const img = new Image();
+                    img.onload = function () {
+                        // Bezpieczna kompresja zdjęcia do max 400px szerokości (gwarantuje działanie na każdym telefonie)
+                        const canvas = document.createElement("canvas");
+                        const scale = 400 / img.width;
+                        canvas.width = 400;
+                        canvas.height = img.height * scale;
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                if (photoInput && photoInput.files && photoInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const img = new Image();
-                        img.onload = function() {
-                            const canvas = document.createElement("canvas");
-                            const ctx = canvas.getContext("2d");
-                            canvas.width = 300;
-                            canvas.height = (img.height * 300) / img.width;
-                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                            
-                            const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
-                            localStorage.setItem("profilePhoto", dataUrl);
-                            
-                            // Przejdź do pliku dowodu (zmień nazwę jeśli Twój plik z dowodem nazywa się inaczej np. index.html)
-                            window.location.href = "dowod.html";
-                        };
-                        img.src = event.target.result;
+                        // Zapis skompresowanego zdjęcia
+                        const compressedData = canvas.toDataURL("image/jpeg", 0.85);
+                        localStorage.setItem("m_photo", compressedData);
+                        
+                        // Przejście do dowodu
+                        window.location.href = "dowod.html";
                     };
-                    reader.readAsDataURL(photoInput.files[0]);
-                } else {
-                    window.location.href = "dowod.html";
-                }
-            });
+                    img.src = evt.target.result;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                window.location.href = "dowod.html";
+            }
         });
     </script>
 </body>
