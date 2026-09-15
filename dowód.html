@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>mDowód</title>
+  <link rel="stylesheet" href="dowod.css">
+</head>
+<body class="dowod-body">
+  <header class="app-header dowod-header">
+    <div class="header-left">
+      <a href="documents.html" class="back-link">
+        <img src="assets/icons/ab001_back.svg" alt="Wróć" class="back-icon">
+      </a>
+      <h1 class="header-title">mDowód</h1>
+    </div>
+    <div class="header-right">
+      <img src="assets/icons/ab010_help.svg" alt="Pomoc" class="help-icon">
+    </div>
+  </header>
+
+  <main class="dowod-main">
+    <div class="time-container">
+      <span class="czas">Czas: --:--:-- --.--.----</span>
+    </div>
+
+    <div class="id-card">
+      <div class="card-hero">
+        <div class="photo-border">
+          <img id="profileImage" src="assets/moje_zdjecie.png" style="opacity: 1; object-fit: cover; width: 100%; height: 100%; display: block;" alt="Zdjęcie profilowe">
+        </div>
+        <div class="flag-container">
+          <img src="assets/dowod/flaga.gif" alt="Flaga Polski" class="flag-gif">
+          <img src="assets/icons/godlo.svg" alt="Godło" class="godlo-icon">
+        </div>
+      </div>
+
+      <div class="user-data">
+        <div class="data-group">
+          <span class="label">Imię (Imiona)</span>
+          <span class="value" id="display-name">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Nazwisko</span>
+          <span class="value" id="display-surname">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Obywatelstwo</span>
+          <span class="value" id="display-nationality">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Data urodzenia</span>
+          <span class="value" id="display-birthDate">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Numer PESEL</span>
+          <span class="value" id="display-pesel">Brak danych</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <div class="qa-item">
+        <img src="assets/icons/ai002_confirm_identity_mini.svg" alt="Skanuj">
+        <span>Potwierdź tożsamość</span>
+      </div>
+      <div class="qa-item">
+        <img src="assets/icons/dane_dowoduosobistego.svg" alt="Dane">
+        <span>Dane dokumentu</span>
+      </div>
+      <div class="qa-item">
+        <img src="assets/icons/ab011_more_vertical.svg" alt="Więcej">
+        <span>Więcej</span>
+      </div>
+    </div>
+
+    <div class="extra-section">
+      <div id="extra-toggle" class="extra-header">
+        <span>Twoje dodatkowe dane</span>
+        <img id="extra-arrow" src="assets/icons/ab008_chevron_down.svg" alt="Rozwiń">
+      </div>
+      <div id="extra-content" class="extra-body">
+        <div class="data-group">
+          <span class="label">Nazwisko rodowe</span>
+          <span class="value" id="lastName">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Płeć</span>
+          <span class="value" id="gender">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Nazwisko rodowe ojca</span>
+          <span class="value" id="fatherSurname">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Nazwisko rodowe matki</span>
+          <span class="value" id="motherSurname">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Miejsce urodzenia</span>
+          <span class="value" id="placeOfBirth">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Adres zameldowania</span>
+          <span class="value" id="address">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Kod pocztowy</span>
+          <span class="value" id="postalcode">Brak danych</span>
+        </div>
+        <div class="data-group">
+          <span class="label">Data zameldowania</span>
+          <span class="value" id="registrationDate">Brak danych</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="update-section">
+      <div class="update-info">
+        <span>Ostatnia aktualizacja: </span>
+        <span id="sukadziwkakurwa">--.--.----</span>
+      </div>
+      <button id="aktualizuj" class="btn-update">Aktualizuj</button>
+    </div>
+  </main>
+
+  <script src="dowod.js"></script>
+</body>
+</html>
