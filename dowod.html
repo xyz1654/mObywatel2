@@ -13,188 +13,37 @@
             --accent: #1d4ed8;
             --border: #e5e7eb;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .phone-container {
-            width: 100%;
-            max-width: 420px;
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
-        }
-
-        .top-bar {
-            background-color: #ffffff;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .photo-section {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .photo-box {
-            width: 110px;
-            height: 140px;
-            border-radius: 12px;
-            overflow: hidden;
-            background-color: #e5e7eb;
-            flex-shrink: 0;
-            border: 1px solid var(--border);
-        }
-
-        .photo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .user-names h2 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .user-names p {
-            font-size: 14px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .info-item label {
-            display: block;
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            font-weight: 600;
-        }
-
-        .info-item span {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .full-width {
-            grid-column: span 2;
-        }
-
-        .section-divider {
-            margin: 20px 0;
-            border: none;
-            border-top: 1px solid var(--border);
-        }
-
-        .update-box {
-            background-color: #f9fafb;
-            padding: 14px 16px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid var(--border);
-            margin-bottom: 16px;
-        }
-
-        .update-box span {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .update-box button {
-            background: none;
-            border: none;
-            color: var(--accent);
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .extra-toggle-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #f3f4f6;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-weight: 600;
-            color: var(--text-main);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .extra-content {
-            display: none;
-            background-color: #f9fafb;
-            padding: 16px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            margin-bottom: 16px;
-        }
-
-        .czas {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 10px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 16px; display: flex; flex-direction: column; align-items: center; }
+        .phone-container { width: 100%; max-width: 420px; background-color: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 20px; border: 1px solid var(--border); }
+        .top-bar { background-color: #ffffff; padding: 16px 20px; display: flex; justifyContent: space-between; align-items: center; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 16px; }
+        .card-body { padding: 20px; }
+        .photo-section { display: flex; gap: 20px; align-items: center; margin-bottom: 24px; }
+        .photo-box { width: 110px; height: 140px; border-radius: 12px; overflow: hidden; background-color: #e5e7eb; flex-shrink: 0; border: 1px solid var(--border); }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+        .user-names h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+        .user-names p { font-size: 14px; color: var(--text-muted); text-transform: uppercase; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .info-item label { display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+        .info-item span { font-size: 15px; font-weight: 600; color: var(--text-main); }
+        .full-width { grid-column: span 2; }
+        .section-divider { margin: 20px 0; border: none; border-top: 1px solid var(--border); }
+        .update-box { background-color: #f9fafb; padding: 14px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); margin-bottom: 16px; }
+        .update-box button { background: none; border: none; color: var(--accent); font-weight: 600; cursor: pointer; font-size: 14px; }
+        .extra-toggle-btn { width: 100%; padding: 12px; background-color: #f3f4f6; border: 1px solid var(--border); border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .extra-content { display: none; background-color: #f9fafb; padding: 16px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; }
     </style>
 </head>
 <body>
-
     <div class="phone-container">
         <div class="top-bar">
             <span>mDowód</span>
             <span id="clock">--:--:--</span>
         </div>
-
         <div class="card-body">
             <div class="photo-section">
                 <div class="photo-box">
-                    <!-- Bezpośrednie odwołanie do zdjęcia w tym samym folderze -->
-                    <img id="profileImage" src="moje_zdjecie.png" alt="Zdjęcie">
+                    <img id="profileImage" alt="Zdjęcie">
                 </div>
                 <div class="user-names">
                     <h2 id="display-name">JAN</h2>
@@ -202,7 +51,6 @@
                     <p style="font-size: 12px; color: var(--accent); margin-top: 6px;" id="display-nationality">POLSKIE</p>
                 </div>
             </div>
-
             <div class="info-grid">
                 <div class="info-item full-width">
                     <label>Numer PESEL</label>
@@ -217,9 +65,7 @@
                     <span id="idSeriesMain">ABC 123456</span>
                 </div>
             </div>
-
             <hr class="section-divider">
-
             <div class="update-box">
                 <div>
                     <label style="font-size: 11px; color: var(--text-muted); display:block;">Ostatnia aktualizacja</label>
@@ -227,254 +73,107 @@
                 </div>
                 <button id="aktualizuj">Aktualizuj</button>
             </div>
-
             <button class="extra-toggle-btn" id="extra-toggle">
                 <span>Więcej danych</span>
                 <span id="extra-arrow">▼</span>
             </button>
-
             <div class="extra-content" id="extra-content">
                 <div class="info-grid">
-                    <div class="info-item">
-                        <label>Ważność</label>
-                        <span id="expiryDateMain">20.05.2034</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Data wydania</label>
-                        <span id="issueDateMain">20.05.2024</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Imię ojca</label>
-                        <span id="fathernameMain">PIOTR</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Imię matki</label>
-                        <span id="mothernameMain">ANNA</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Nazwisko rodowe</label>
-                        <span id="lastName">KOWALSKI</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Płeć</label>
-                        <span id="gender">MĘŻCZYZNA</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Nazwisko rodowe ojca</label>
-                        <span id="fatherSurname">KOWALSKI</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Nazwisko rodowe matki</label>
-                        <span id="motherSurname">KOWALSKA</span>
-                    </div>
-                    <div class="info-item full-width">
-                        <label>Miejsce urodzenia</label>
-                        <span id="placeOfBirth">GDYNIA</span>
-                    </div>
-                    <div class="info-item full-width">
-                        <label>Adres zameldowania na pobyt stały</label>
-                        <span id="address">UL. MORSKA 10/12</span>
-                    </div>
-                    <div class="info-item full-width">
-                        <label>Kod pocztowy i miejscowość</label>
-                        <span id="postalcode">81-001 GDYNIA</span>
-                    </div>
-                    <div class="info-item full-width">
-                        <label>Data zameldowania</label>
-                        <span id="registrationDate">15.08.2008</span>
-                    </div>
+                    <div class="info-item"><label>Ważność</label><span id="expiryDateMain">20.05.2034</span></div>
+                    <div class="info-item"><label>Data wydania</label><span id="issueDateMain">20.05.2024</span></div>
+                    <div class="info-item"><label>Imię ojca</label><span id="fathernameMain">PIOTR</span></div>
+                    <div class="info-item"><label>Imię matki</label><span id="mothernameMain">ANNA</span></div>
+                    <div class="info-item"><label>Nazwisko rodowe</label><span id="lastName">KOWALSKI</span></div>
+                    <div class="info-item"><label>Płeć</label><span id="gender">MĘŻCZYZNA</span></div>
+                    <div class="info-item"><label>Nazwisko rodowe ojca</label><span id="fatherSurname">KOWALSKI</span></div>
+                    <div class="info-item"><label>Nazwisko rodowe matki</label><span id="motherSurname">KOWALSKA</span></div>
+                    <div class="info-item full-width"><label>Miejsce urodzenia</label><span id="placeOfBirth">GDYNIA</span></div>
+                    <div class="info-item full-width"><label>Adres zameldowania</label><span id="address">UL. MORSKA 10/12</span></div>
+                    <div class="info-item full-width"><label>Kod pocztowy i miejscowość</label><span id="postalcode">81-001 GDYNIA</span></div>
+                    <div class="info-item full-width"><label>Data zameldowania</label><span id="registrationDate">15.08.2008</span></div>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Generowanie unikalnego numeru dowodu, jeśli brak
             function generateIdSeries() {
                 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                const l1 = letters.charAt(Math.floor(Math.random() * 26));
-                const l2 = letters.charAt(Math.floor(Math.random() * 26));
-                const l3 = letters.charAt(Math.floor(Math.random() * 26));
-                const num = Math.floor(100000 + Math.random() * 899999);
-                return `${l1}${l2}${l3} ${num}`;
+                return `${letters.charAt(Math.floor(Math.random()*26))}${letters.charAt(Math.floor(Math.random()*26))}${letters.charAt(Math.floor(Math.random()*26))} ${Math.floor(100000 + Math.random() * 899999)}`;
             }
 
-            // Generowanie PESEL na podstawie daty urodzenia
-            function generatePeselFromBirthdate(birthDateStr, isMale) {
-                if (!birthDateStr || !birthDateStr.includes(".")) {
-                    birthDateStr = "15.08.2008";
-                }
+            function generatePesel(birthDateStr, isMale) {
+                if (!birthDateStr || !birthDateStr.includes(".")) birthDateStr = "15.08.2008";
                 const parts = birthDateStr.split(".");
-                const day = parseInt(parts[0], 10);
-                const month = parseInt(parts[1], 10);
-                const year = parseInt(parts[2], 10);
-
                 const pad = (n) => (n < 10 ? "0" + n : "" + n);
-                const pYear = String(year).slice(-2);
-                let pMonth = month;
-                if (year >= 2000 && year < 2100) {
-                    pMonth += 20;
-                }
-
-                const random3Digits = Math.floor(100 + Math.random() * 899);
-                const genderDigit = isMale ? (Math.floor(Math.random() * 5) * 2 + 1) : (Math.floor(Math.random() * 5) * 2);
-                const rawPesel = pYear + pad(pMonth) + pad(day) + String(random3Digits) + genderDigit;
-
-                const weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
-                let sum = 0;
-                for (let i = 0; i < 10; i++) {
-                    sum += parseInt(rawPesel.charAt(i), 10) * weights[i];
-                }
-                const controlDigit = (10 - (sum % 10)) % 10;
-                return rawPesel + controlDigit;
+                let pMonth = parseInt(parts[1], 10);
+                if (parseInt(parts[2], 10) >= 2000) pMonth += 20;
+                const raw = String(parts[2]).slice(-2) + pad(pMonth) + pad(parts[0]) + Math.floor(100 + Math.random() * 899) + (isMale ? 1 : 2);
+                let sum = 0, weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
+                for (let i = 0; i < 10; i++) sum += parseInt(raw.charAt(i), 10) * weights[i];
+                return raw + ((10 - (sum % 10)) % 10);
             }
 
-            // Ustawienia domyślne danych
-            function initializeData() {
-                let birthDate = localStorage.getItem("birthDate") || "15.08.2008";
-                let gender = localStorage.getItem("gender") || "MĘŻCZYZNA";
-                let isMale = gender.toUpperCase().startsWith("M");
-                let userSurname = localStorage.getItem("surname") || "KOWALSKI";
+            let birthDate = localStorage.getItem("birthDate") || "15.08.2008";
+            let gender = localStorage.getItem("gender") || "MĘŻCZYZNA";
+            let isMale = gender.toUpperCase().startsWith("M");
+            let userSurname = localStorage.getItem("surname") || "KOWALSKI";
 
-                if (!localStorage.getItem("pesel") || localStorage.getItem("pesel").length !== 11) {
-                    localStorage.setItem("pesel", generatePeselFromBirthdate(birthDate, isMale));
-                }
+            if (!localStorage.getItem("pesel")) localStorage.setItem("pesel", generatePesel(birthDate, isMale));
+            if (!localStorage.getItem("idSeriesMain")) localStorage.setItem("idSeriesMain", generateIdSeries());
 
-                if (!localStorage.getItem("idSeriesMain")) {
-                    localStorage.setItem("idSeriesMain", generateIdSeries());
-                }
+            const fields = ["name", "surname", "nationality", "birthDate", "pesel", "idSeriesMain", "expiryDateMain", "issueDateMain", "fatherNameMain", "motherNameMain", "lastName", "gender", "fatherSurname", "motherSurname", "placeOfBirth", "address", "postalcode", "registrationDate"];
+            fields.forEach(key => {
+                let elId = ["name", "surname", "nationality", "birthDate", "pesel"].includes(key) ? "display-" + key : (key === "fatherNameMain" ? "fathernameMain" : (key === "motherNameMain" ? "mothernameMain" : key));
+                const el = document.getElementById(elId);
+                const val = localStorage.getItem(key);
+                if (el && val) el.textContent = val.toUpperCase();
+            });
 
-                const defaults = {
-                    name: "JAN",
-                    surname: userSurname,
-                    nationality: "POLSKIE",
-                    expiryDateMain: "20.05.2034",
-                    issueDateMain: "20.05.2024",
-                    fatherNameMain: "PIOTR",
-                    motherNameMain: "ANNA",
-                    lastName: userSurname,
-                    gender: isMale ? "MĘŻCZYZNA" : "KOBIETA",
-                    fatherSurname: userSurname,
-                    motherSurname: "KOWALSKA",
-                    placeOfBirth: "GDYNIA",
-                    address: "UL. MORSKA 10/12",
-                    postalcode: "81-001 GDYNIA",
-                    registrationDate: birthDate
-                };
-
-                Object.keys(defaults).forEach(key => {
-                    if (!localStorage.getItem(key)) {
-                        localStorage.setItem(key, defaults[key]);
-                    }
-                });
+            // Wczytywanie zdjęcia zapisanego w pamięci przeglądarki
+            const savedPhoto = localStorage.getItem("profilePhoto");
+            const imgEl = document.getElementById("profileImage");
+            if (savedPhoto && imgEl) {
+                imgEl.src = savedPhoto;
             }
 
-            // Wypełnianie pól danymi z pamięci przeglądarki
-            function populateData() {
-                const fields = [
-                    "name", "surname", "nationality", "birthDate", "pesel", 
-                    "idSeriesMain", "expiryDateMain", "issueDateMain", 
-                    "fatherNameMain", "motherNameMain", "lastName", "gender", 
-                    "fatherSurname", "motherSurname", "placeOfBirth", 
-                    "address", "postalcode", "registrationDate"
-                ];
-
-                fields.forEach(key => {
-                    let elId = key;
-                    if (["name", "surname", "nationality", "birthDate", "pesel"].includes(key)) {
-                        elId = "display-" + key;
-                    } else if (key === "fatherNameMain") elId = "fathernameMain"; 
-                    else if (key === "motherNameMain") elId = "mothernameMain";
-                    
-                    const element = document.getElementById(elId);
-                    const value = localStorage.getItem(key);
-                    
-                    if (element && value) {
-                        element.textContent = value.toUpperCase();
-                    }
-                });
-            }
-
-            // Obsługa ładowania zdjęcia
-            function loadProfileImage() {
-                const imgElement = document.getElementById("profileImage");
-                if (!imgElement) return;
-
-                const variants = ["moje_zdjecie.png", "moje_zdjecie.PNG", "moje_zdjecie.jpg", "moje_zdjecie.JPG"];
-                let attempt = 0;
-                const cacheBuster = "?v=" + new Date().getTime();
-
-                imgElement.onerror = function() {
-                    attempt++;
-                    if (attempt < variants.length) {
-                        imgElement.src = variants[attempt] + cacheBuster;
-                    }
-                };
-
-                imgElement.src = variants[0] + cacheBuster;
-                imgElement.style.opacity = "1";
-            }
-
-            // Rozwijanie sekcji "Więcej danych"
             const toggleBtn = document.getElementById("extra-toggle");
             const contentDiv = document.getElementById("extra-content");
             const arrowImg = document.getElementById("extra-arrow");
-
             if (toggleBtn && contentDiv) {
                 toggleBtn.addEventListener("click", function () {
-                    if (contentDiv.style.display === "block") {
-                        contentDiv.style.display = "none";
-                        if(arrowImg) arrowImg.style.transform = "rotate(0deg)";
-                    } else {
-                        contentDiv.style.display = "block";
-                        if(arrowImg) arrowImg.style.transform = "rotate(180deg)";
-                    }
+                    const isOpen = contentDiv.style.display === "block";
+                    contentDiv.style.display = isOpen ? "none" : "block";
+                    if (arrowImg) arrowImg.style.transform = isOpen ? "rotate(0deg)" : "rotate(180deg)";
                 });
             }
 
-            // Obsługa przycisku aktualizuj
             const lastUpdateEl = document.getElementById("lastUpdateData");
             const btnUpdate = document.getElementById("aktualizuj");
-            
-            function setNowDate() {
+            const setNowDate = () => {
                 const d = new Date();
                 const pad = (n) => (n < 10 ? "0" + n : "" + n);
-                return pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + d.getFullYear();
-            }
-
-            const savedDate = localStorage.getItem("lastUpdateDate");
-            if (lastUpdateEl) {
-                lastUpdateEl.textContent = savedDate || setNowDate();
-            }
-
+                return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
+            };
+            if (lastUpdateEl) lastUpdateEl.textContent = localStorage.getItem("lastUpdateDate") || setNowDate();
             if (btnUpdate) {
                 btnUpdate.addEventListener("click", function (e) {
                     e.preventDefault();
                     const now = setNowDate();
-                    if (lastUpdateEl) {
-                        lastUpdateEl.textContent = now;
-                    }
+                    if (lastUpdateEl) lastUpdateEl.textContent = now;
                     localStorage.setItem("lastUpdateDate", now);
                 });
             }
-
-            initializeData();
-            populateData();
-            loadProfileImage();
         });
 
-        // Zegarek na górnym pasku
         const czasEl = document.getElementById("clock");
-        function updateClockNow() {
-            const now = new Date();
-            const pad = (n) => (n < 10 ? `0${n}` : `${n}`);
+        setInterval(() => {
             if (czasEl) {
+                const now = new Date();
+                const pad = (n) => (n < 10 ? `0${n}` : `${n}`);
                 czasEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
             }
-        }
-        setInterval(updateClockNow, 1000);
-        updateClockNow();
+        }, 1000);
     </script>
 </body>
 </html>
