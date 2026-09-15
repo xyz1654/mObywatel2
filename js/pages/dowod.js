@@ -118,6 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
             attempt++;
             if (attempt < variants.length) {
                 imgElement.src = variants[attempt] + cacheBuster;
+            } else {
+                console.warn("Nie znaleziono pliku ze zdjęciem w folderze głównym!");
             }
         };
 
@@ -142,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Obsługa przycisku aktualizacji danych
     const lastUpdateEl = document.getElementById("lastUpdateData"); 
     const btnUpdate = document.getElementById("aktualizuj");
     
@@ -156,11 +159,13 @@ document.addEventListener("DOMContentLoaded", function () {
         lastUpdateEl.textContent = savedDate || "--.--.----";
     }
 
-    if (btnUpdate && lastUpdateEl) {
+    if (btnUpdate) {
         btnUpdate.addEventListener("click", function (e) {
             e.preventDefault();
             const now = setNowDate();
-            lastUpdateEl.textContent = now;
+            if (lastUpdateEl) {
+                lastUpdateEl.textContent = now;
+            }
             localStorage.setItem("lastUpdateDate", now);
         });
     }
