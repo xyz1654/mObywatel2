@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function generatePeselFromBirthdate(birthDateStr, isMale) {
         if (!birthDateStr || !birthDateStr.includes(".")) {
-            birthDateStr = "15.08.1998";
+            birthDateStr = "15.08.2008";
         }
         const parts = birthDateStr.split(".");
         const day = parseInt(parts[0], 10);
@@ -41,19 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function initializeData() {
-        var pad = (n) => (n < 10 ? "0" + n : "" + n);
-        
-        let birthDate = localStorage.getItem("birthDate");
-        if (!birthDate) {
-            var year = Math.floor(Math.random() * (2004 - 1985 + 1)) + 1985;
-            var month = Math.floor(Math.random() * 12) + 1;
-            var day = Math.floor(Math.random() * 28) + 1;
-            birthDate = pad(day) + "." + pad(month) + "." + year;
-            localStorage.setItem("birthDate", birthDate);
-        }
-
-        let gender = localStorage.getItem("gender") || "KOBIETA";
+        let birthDate = localStorage.getItem("birthDate") || "15.08.2008";
+        let gender = localStorage.getItem("gender") || "MĘŻCZYZNA";
         let isMale = gender.toUpperCase().startsWith("M");
+        let userSurname = localStorage.getItem("surname") || "KOWALSKI";
 
         if (!localStorage.getItem("pesel") || localStorage.getItem("pesel").length !== 11) {
             const autoPesel = generatePeselFromBirthdate(birthDate, isMale);
@@ -66,21 +57,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const defaults = {
-            name: isMale ? "JAKUB" : "ZUZANNA",
-            surname: isMale ? "KOWALSKI" : "LEWANDOWSKA",
+            name: "JAN",
+            surname: userSurname,
             nationality: "POLSKIE",
-            expiryDateMain: "20.11.2031",
-            issueDateMain: "20.11.2021",
-            fatherNameMain: isMale ? "PIOTR" : "JAN",
-            motherNameMain: isMale ? "ANNA" : "ALICJA",
-            lastName: isMale ? "KOWALSKI" : "LEWANDOWSKA",
+            expiryDateMain: "20.05.2034",
+            issueDateMain: "20.05.2024",
+            fatherNameMain: "PIOTR",
+            motherNameMain: "ANNA",
+            lastName: userSurname,
             gender: isMale ? "MĘŻCZYZNA" : "KOBIETA",
-            fatherSurname: "KAMIŃSKI",
-            motherSurname: "LEWANDOWSKA",
-            placeOfBirth: "WARSZAWA",
-            address: "UL. MARSZAŁKOWSKA 10/12",
-            postalcode: "00-001 WARSZAWA",
-            registrationDate: "20.11.2021"
+            fatherSurname: userSurname,
+            motherSurname: "KOWALSKA",
+            placeOfBirth: "GDYNIA",
+            address: "UL. MORSKA 10/12",
+            postalcode: "81-001 GDYNIA",
+            registrationDate: birthDate
         };
 
         Object.keys(defaults).forEach(key => {
