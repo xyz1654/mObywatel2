@@ -2,195 +2,177 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mDowód</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: #f0f2f5; color: #101828; display: flex; justify-content: center; min-height: 100vh; padding: 0; }
-        
-        .app-screen { width: 100%; max-width: 430px; background: #f0f2f5; min-height: 100vh; display: flex; flex-direction: column; position: relative; }
-        
-        /* Top Navigation Bar */
-        .top-nav { background: #fff; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e4e7ec; font-weight: 700; font-size: 17px; }
-        .top-nav .time { font-size: 15px; font-weight: 600; color: #475467; }
-
-        .container { padding: 16px; flex: 1; }
-
-        /* Karta mDowodu */
-        .card { background: #ffffff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(16, 24, 40, 0.06); border: 1px solid #eaecf0; position: relative; overflow: hidden; }
-
-        /* Zabezpieczenie - Flaga i animowany punkt */
-        .security-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #f2f4f7; }
-        .flag-box { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #344054; }
-        .flag { width: 24px; height: 16px; background: linear-gradient(to bottom, #fff 50%, #dc2626 50%); border: 1px solid #d0d5dd; border-radius: 2px; }
-        .dot-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #12b76a; font-weight: 600; }
-        .pulse-dot { width: 8px; height: 8px; background-color: #12b76a; border-radius: 50%; box-shadow: 0 0 0 0 rgba(18, 183, 106, 0.7); animation: pulse 1.6s infinite; }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(18, 183, 106, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(18, 183, 106, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(18, 183, 106, 0); }
+        :root {
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --accent: #1d4ed8;
+            --border: #e5e7eb;
         }
-
-        /* Układ zdjęcia i danych */
-        .main-info { display: flex; gap: 16px; }
-        .photo-wrapper { position: relative; width: 115px; height: 145px; border-radius: 10px; overflow: hidden; background: #e4e7ec; flex-shrink: 0; border: 1px solid #d0d5dd; }
-        .photo-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        
-        .names-box { flex: 1; }
-        .names-box h2 { font-size: 20px; font-weight: 800; color: #101828; line-height: 1.2; letter-spacing: -0.02em; }
-        .names-box p { font-size: 15px; font-weight: 600; color: #475467; margin-top: 2px; }
-        .nationality { margin-top: 10px; display: inline-block; font-size: 12px; font-weight: 700; color: #1570ef; text-transform: uppercase; background: #eff8ff; padding: 3px 8px; border-radius: 6px; }
-
-        /* Grid danych */
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #f2f4f7; }
-        .data-item.full { grid-column: span 2; }
-        .data-item label { display: block; font-size: 11px; font-weight: 700; color: #667085; text-transform: uppercase; margin-bottom: 2px; }
-        .data-item span { font-size: 15px; font-weight: 700; color: #101828; letter-spacing: -0.01em; }
-
-        /* Przyciski i aktualizacja */
-        .update-card { background: #fff; border-radius: 14px; padding: 14px 16px; margin-top: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eaecf0; box-shadow: 0 2px 6px rgba(16, 24, 40, 0.04); }
-        .update-card label { font-size: 11px; color: #667085; font-weight: 600; display: block; }
-        .update-card span { font-size: 14px; font-weight: 700; color: #101828; }
-        .update-btn { color: #1570ef; font-weight: 700; font-size: 14px; background: none; border: none; cursor: pointer; }
-
-        .more-btn { width: 100%; background: #fff; border-radius: 14px; padding: 16px; margin-top: 12px; border: 1px solid #eaecf0; font-weight: 700; font-size: 15px; color: #101828; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(16, 24, 40, 0.04); cursor: pointer; }
-
-        .extra-box { display: none; background: #fff; border-radius: 14px; padding: 16px; margin-top: 8px; border: 1px solid #eaecf0; }
-
-        /* Dolny pasek nawigacyjny jak w prawdziwej apce */
-        .bottom-nav { background: #ffffff; border-top: 1px solid #eaecf0; padding: 8px 12px 14px 12px; display: flex; justify-content: space-around; position: sticky; bottom: 0; width: 100%; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; color: #667085; text-decoration: none; }
-        .nav-item.active { color: #1570ef; }
-        .nav-icon { width: 22px; height: 22px; fill: currentColor; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 16px; display: flex; flex-direction: column; align-items: center; }
+        .phone-container { width: 100%; max-width: 420px; background-color: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 20px; border: 1px solid var(--border); }
+        .top-bar { background-color: #ffffff; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 16px; }
+        .card-body { padding: 20px; }
+        .photo-section { display: flex; gap: 20px; align-items: center; margin-bottom: 24px; }
+        .photo-box { width: 110px; height: 140px; border-radius: 12px; overflow: hidden; background-color: #e5e7eb; flex-shrink: 0; border: 1px solid var(--border); }
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .user-names h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+        .user-names p { font-size: 14px; color: var(--text-muted); text-transform: uppercase; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .info-item label { display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+        .info-item span { font-size: 15px; font-weight: 600; color: var(--text-main); }
+        .full-width { grid-column: span 2; }
+        .section-divider { margin: 20px 0; border: none; border-top: 1px solid var(--border); }
+        .update-box { background-color: #f9fafb; padding: 14px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); margin-bottom: 16px; }
+        .update-box button { background: none; border: none; color: var(--accent); font-weight: 600; cursor: pointer; font-size: 14px; }
+        .extra-toggle-btn { width: 100%; padding: 12px; background-color: #f3f4f6; border: 1px solid var(--border); border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .extra-content { display: none; background-color: #f9fafb; padding: 16px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; }
     </style>
 </head>
 <body>
-
-    <div class="app-screen">
-        <div class="top-nav">
+    <div class="phone-container">
+        <div class="top-bar">
             <span>mDowód</span>
-            <span class="time" id="clock">--:--:--</span>
+            <span id="clock">--:--:--</span>
         </div>
-
-        <div class="container">
-            <div class="card">
-                <div class="security-bar">
-                    <div class="flag-box">
-                        <div class="flag"></div>
-                        <span>Rzeczpospolita Polska</span>
-                    </div>
-                    <div class="dot-status">
-                        <div class="pulse-dot"></div>
-                        <span>Certyfikat aktywny</span>
-                    </div>
+        <div class="card-body">
+            <div class="photo-section">
+                <div class="photo-box">
+                    <img id="profileImage" alt="Zdjęcie">
                 </div>
-
-                <div class="main-info">
-                    <div class="photo-wrapper">
-                        <img id="userPhoto" alt="Zdjęcie profilowe">
-                    </div>
-                    <div class="names-box">
-                        <h2 id="userName">OSKAR</h2>
-                        <p id="userSurname">CZERWIŃSKI</p>
-                        <span class="nationality">Obywatelstwo Polskie</span>
-                    </div>
-                </div>
-
-                <div class="data-grid">
-                    <div class="data-item full">
-                        <label>Numer PESEL</label>
-                        <span id="userPesel">08281781515</span>
-                    </div>
-                    <div class="data-item">
-                        <label>Data urodzenia</label>
-                        <span id="userBirth">17.08.2008</span>
-                    </div>
-                    <div class="data-item">
-                        <label>Seria i numer</label>
-                        <span id="userIdSeries">TCE 379079</span>
-                    </div>
+                <div class="user-names">
+                    <h2 id="display-name">JAN</h2>
+                    <p id="display-surname">KOWALSKI</p>
+                    <p style="font-size: 12px; color: var(--accent); margin-top: 6px;" id="display-nationality">POLSKIE</p>
                 </div>
             </div>
-
-            <div class="update-card">
+            <div class="info-grid">
+                <div class="info-item full-width">
+                    <label>Numer PESEL</label>
+                    <span id="display-pesel">08281512345</span>
+                </div>
+                <div class="info-item">
+                    <label>Data urodzenia</label>
+                    <span id="display-birthDate">15.08.2008</span>
+                </div>
+                <div class="info-item">
+                    <label>Seria i numer</label>
+                    <span id="idSeriesMain">ABC 123456</span>
+                </div>
+            </div>
+            <hr class="section-divider">
+            <div class="update-box">
                 <div>
-                    <label>Ostatnia aktualizacja</label>
-                    <span id="lastUpdate">15.09.2026</span>
+                    <label style="font-size: 11px; color: var(--text-muted); display:block;">Ostatnia aktualizacja</label>
+                    <span id="lastUpdateData">--.--.----</span>
                 </div>
-                <button class="update-btn" onclick="updateDate()">Aktualizuj</button>
+                <button id="aktualizuj">Aktualizuj</button>
             </div>
-
-            <button class="more-btn" onclick="toggleExtra()">
+            <button class="extra-toggle-btn" id="extra-toggle">
                 <span>Więcej danych</span>
-                <span id="arrow">▼</span>
+                <span id="extra-arrow">▼</span>
             </button>
-
-            <div class="extra-box" id="extraBox">
-                <div class="data-grid">
-                    <div class="data-item"><label>Ważność</label><span>17.08.2038</span></div>
-                    <div class="data-item"><label>Płeć</label><span>Mężczyzna</span></div>
-                    <div class="data-item full"><label>Miejsce urodzenia</label><span>Gdynia</span></div>
+            <div class="extra-content" id="extra-content">
+                <div class="info-grid">
+                    <div class="info-item"><label>Ważność</label><span id="expiryDateMain">20.05.2034</span></div>
+                    <div class="info-item"><label>Data wydania</label><span id="issueDateMain">20.05.2024</span></div>
+                    <div class="info-item"><label>Imię ojca</label><span id="fathernameMain">PIOTR</span></div>
+                    <div class="info-item"><label>Imię matki</label><span id="mothernameMain">ANNA</span></div>
+                    <div class="info-item"><label>Nazwisko rodowe</label><span id="lastName">KOWALSKI</span></div>
+                    <div class="info-item"><label>Płeć</label><span id="gender">MĘŻCZYZNA</span></div>
+                    <div class="info-item"><label>Nazwisko rodowe ojca</label><span id="fatherSurname">KOWALSKI</span></div>
+                    <div class="info-item"><label>Nazwisko rodowe matki</label><span id="motherSurname">KOWALSKA</span></div>
+                    <div class="info-item full-width"><label>Miejsce urodzenia</label><span id="placeOfBirth">GDYNIA</span></div>
+                    <div class="info-item full-width"><label>Adres zameldowania</label><span id="address">UL. MORSKA 10/12</span></div>
+                    <div class="info-item full-width"><label>Kod pocztowy i miejscowość</label><span id="postalcode">81-001 GDYNIA</span></div>
+                    <div class="info-item full-width"><label>Data zameldowania</label><span id="registrationDate">15.08.2008</span></div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Dolny pasek jak w mObywatelu -->
-        <div class="bottom-nav">
-            <div class="nav-item active">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                Pulpit
-            </div>
-            <div class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                Dokumenty
-            </div>
-            <div class="nav-item">
-                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                Usługi
             </div>
         </div>
     </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Odczyt danych z localStorage
-            if (localStorage.getItem("m_name")) document.getElementById("userName").textContent = localStorage.getItem("m_name");
-            if (localStorage.getItem("m_surname")) document.getElementById("userSurname").textContent = localStorage.getItem("m_surname");
-            if (localStorage.getItem("m_pesel")) document.getElementById("userPesel").textContent = localStorage.getItem("m_pesel");
-            if (localStorage.getItem("m_birthDate")) document.getElementById("userBirth").textContent = localStorage.getItem("m_birthDate");
-            if (localStorage.getItem("m_idSeries")) document.getElementById("userIdSeries").textContent = localStorage.getItem("m_idSeries");
-
-            // Wczytanie skompresowanego zdjęcia
-            const photoData = localStorage.getItem("m_photo");
-            if (photoData) {
-                document.getElementById("userPhoto").src = photoData;
+            function generateIdSeries() {
+                const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                return `${letters.charAt(Math.floor(Math.random()*26))}${letters.charAt(Math.floor(Math.random()*26))}${letters.charAt(Math.floor(Math.random()*26))} ${Math.floor(100000 + Math.random() * 899999)}`;
             }
 
-            // Zegarek w czasie rzeczywistym
-            setInterval(() => {
-                const now = new Date();
-                document.getElementById("clock").textContent = now.toTimeString().split(' ')[0];
-            }, 1000);
+            function generatePesel(birthDateStr, isMale) {
+                if (!birthDateStr || !birthDateStr.includes(".")) birthDateStr = "15.08.2008";
+                const parts = birthDateStr.split(".");
+                const pad = (n) => (n < 10 ? "0" + n : "" + n);
+                let pMonth = parseInt(parts[1], 10);
+                if (parseInt(parts[2], 10) >= 2000) pMonth += 20;
+                const raw = String(parts[2]).slice(-2) + pad(pMonth) + pad(parts[0]) + Math.floor(100 + Math.random() * 899) + (isMale ? 1 : 2);
+                let sum = 0, weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
+                for (let i = 0; i < 10; i++) sum += parseInt(raw.charAt(i), 10) * weights[i];
+                return raw + ((10 - (sum % 10)) % 10);
+            }
+
+            let birthDate = localStorage.getItem("birthDate") || "15.08.2008";
+            let gender = localStorage.getItem("gender") || "MĘŻCZYZNA";
+            let isMale = gender.toUpperCase().startsWith("M");
+
+            if (!localStorage.getItem("pesel")) localStorage.setItem("pesel", generatePesel(birthDate, isMale));
+            if (!localStorage.getItem("idSeriesMain")) localStorage.setItem("idSeriesMain", generateIdSeries());
+
+            const fields = ["name", "surname", "nationality", "birthDate", "pesel", "idSeriesMain", "expiryDateMain", "issueDateMain", "fatherNameMain", "motherNameMain", "lastName", "gender", "fatherSurname", "motherSurname", "placeOfBirth", "address", "postalcode", "registrationDate"];
+            fields.forEach(key => {
+                let elId = ["name", "surname", "nationality", "birthDate", "pesel"].includes(key) ? "display-" + key : (key === "fatherNameMain" ? "fathernameMain" : (key === "motherNameMain" ? "mothernameMain" : key));
+                const el = document.getElementById(elId);
+                const val = localStorage.getItem(key);
+                if (el && val) el.textContent = val.toUpperCase();
+            });
+
+            // Wczytywanie zdjęcia zapisanego w pamięci przeglądarki
+            const savedPhoto = localStorage.getItem("profilePhoto");
+            const imgEl = document.getElementById("profileImage");
+            if (savedPhoto && imgEl) {
+                imgEl.src = savedPhoto;
+            }
+
+            const toggleBtn = document.getElementById("extra-toggle");
+            const contentDiv = document.getElementById("extra-content");
+            const arrowImg = document.getElementById("extra-arrow");
+            if (toggleBtn && contentDiv) {
+                toggleBtn.addEventListener("click", function () {
+                    const isOpen = contentDiv.style.display === "block";
+                    contentDiv.style.display = isOpen ? "none" : "block";
+                    if (arrowImg) arrowImg.style.transform = isOpen ? "rotate(0deg)" : "rotate(180deg)";
+                });
+            }
+
+            const lastUpdateEl = document.getElementById("lastUpdateData");
+            const btnUpdate = document.getElementById("aktualizuj");
+            const setNowDate = () => {
+                const d = new Date();
+                const pad = (n) => (n < 10 ? "0" + n : "" + n);
+                return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
+            };
+            if (lastUpdateEl) lastUpdateEl.textContent = localStorage.getItem("lastUpdateDate") || setNowDate();
+            if (btnUpdate) {
+                btnUpdate.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const now = setNowDate();
+                    if (lastUpdateEl) lastUpdateEl.textContent = now;
+                    localStorage.setItem("lastUpdateDate", now);
+                });
+            }
         });
 
-        function toggleExtra() {
-            const box = document.getElementById("extraBox");
-            const arrow = document.getElementById("arrow");
-            if (box.style.display === "block") {
-                box.style.display = "none";
-                arrow.textContent = "▼";
-            } else {
-                box.style.display = "block";
-                arrow.textContent = "▲";
+        const czasEl = document.getElementById("clock");
+        setInterval(() => {
+            if (czasEl) {
+                const now = new Date();
+                const pad = (n) => (n < 10 ? `0${n}` : `${n}`);
+                czasEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
             }
-        }
-
-        function updateDate() {
-            const today = new Date();
-            const dateStr = String(today.getDate()).padStart(2, '0') + '.' + String(today.getMonth() + 1).padStart(2, '0') + '.' + today.getFullYear();
-            document.getElementById("lastUpdate").textContent = dateStr;
-        }
+        }, 1000);
     </script>
 </body>
 </html>
