@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz E-dowód</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .form-container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #0056b3;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003d80;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Formularz E-dowód</h1>
+        <form id="edowod-form">
+            <label for="surname">Nazwisko:</label>
+            <input type="text" id="surname" name="surname" value="KOWALSKI" required>
+            
+            <label for="given-names">Imiona:</label>
+            <input type="text" id="given-names" name="given-names" value="JAN" required>
+            
+            <label for="citizenship">Obywatelstwo:</label>
+            <input type="text" id="citizenship" name="citizenship" value="POLSKIE" required>
+            
+            <label for="birthdate">Data urodzenia:</label>
+            <input type="text" id="birthdate" name="birthdate" value="01.01.2000" required>
+            
+            <label for="id-number">Numer dowodu osobistego:</label>
+            <input type="text" id="id-number" name="id-number" value="ABC123456" required>
+            
+            <label for="gender">Płeć:</label>
+            <select id="gender" name="gender" required>
+                <option value="M">M</option>
+                <option value="K">K</option>
+            </select>
+            
+            <label for="expiry-date">Termin ważności:</label>
+            <input type="text" id="expiry-date" name="expiry-date" value="01.01.2030" required>
+            
+            <label for="can-number">Numer CAN:</label>
+            <input type="text" id="can-number" name="can-number" value="123456" required>
+            
+            <label for="photo">Link URL do zdjęcia (np. z Imgur/Discorda):</label>
+            <input type="url" id="photo" name="photo" placeholder="https://..." required>
+            
+            <button type="submit">Wygeneruj e-dowód</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('edowod-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const params = new URLSearchParams();
+            
+            formData.forEach((value, key) => {
+                params.append(key, value);
+            });
+
+            // Dynamiczne przekierowanie do dowod.html w tym samym folderze
+            const currentPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+            window.location.href = window.location.origin + currentPath + 'dowod.html?' + params.toString();
+        });
+    </script>
+</body>
+</html>
