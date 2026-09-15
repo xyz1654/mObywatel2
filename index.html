@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
     <title>mDowód</title>
-    <!-- Twoje style (załóżmy, że masz je w folderze css) -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/pages/dowod.css">
     
-    <!-- Prosty styl do płynnego rozwijania akordeonu (zakładka "Dodatkowe dane") -->
     <style>
         #extra-content {
-            display: none; /* Domyślnie schowane! */
+            display: none;
             transition: all 0.3s ease;
         }
         #extra-arrow {
@@ -34,16 +32,13 @@
     <p class="czas" id="clock">--:--:--</p>
 
     <main>
-        <!-- Sekcja zdjęcia i flagi -->
         <section id="lew">
             <div class="photo-container">
                 <img id="profileImage" src="moje_zdjecie.png" class="photo" alt="Zdjęcie">
             </div>
-            <!-- Tu pewnie masz animację flagi -->
             <img src="assets/dowod/flaga_bez.gif" alt="Flaga" id="flaga"> 
         </section>
 
-        <!-- Główne dane (Prawa strona na górze) -->
         <section id="praw">
             <div class="cwel"><span class="title" id="display-name">Brak danych</span><span class="description">Imię (Imiona)</span></div>
             <div class="cwel"><span class="title" id="display-surname">Brak danych</span><span class="description">Nazwisko</span></div>
@@ -53,7 +48,6 @@
         </section>
     </main>
 
-    <!-- Sekcja: Szczegóły dowodu -->
     <section class="details-card">
         <div class="row">
             <p class="info">Seria i numer mDowodu</p>
@@ -81,7 +75,6 @@
         </div>
     </section>
 
-    <!-- ZAKŁADKA ROZWIJANA: Dodatkowe dane -->
     <section class="collapsible list-card" id="extra-toggle" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 15px;">
         <p style="font-weight:500; margin: 0;">Twoje dodatkowe dane</p>
         <img id="extra-arrow" src="assets/icons/ab008_chevron_down.svg" alt="Rozwiń">
@@ -102,7 +95,6 @@
         </div>
     </div>
 
-    <!-- Ostatnia aktualizacja -->
     <section>
         <a class="list-card" style="display:flex; justify-content:space-between; align-items:center; padding: 15px;">
             <div>
@@ -113,7 +105,6 @@
         </a>
     </section>
 
-    <!-- Skrypt sterujący -->
     <script src="js/pages/dowod.js"></script>
 </body>
 </html>
