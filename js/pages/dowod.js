@@ -1,130 +1,100 @@
-setTimeout(function () {
-  try {
-    window.scrollTo(0, 1);
-  } catch (e) {}
-}, 0);
+// --- POPRAWIONY GENERATOR DANYCH ORAZ MAPOWANIE ---
+(function () {
+  var pad = (n) => (n < 10 ? "0" + n : "" + n);
 
-// Stała obsługa zdjęcia profilowego ze sztywną ścieżką do assets
-async function applyProfileImage() {
-  try {
-    var profileImage = document.getElementById("profileImage");
-    if (!profileImage) return;
+  // Funkcja wyliczająca prawidłową cyfrę kontrolną PESEL
+  function generateValidPesel(year, month, day, isMale) {
+    var pYear = String(year).slice(-2);
+    var pMonth = year >= 2000 ? month + 20 : month;
+    var pMonthStr = pad(pMonth);
+    var pDayStr = pad(day);
+    var randomDigits = pad(Math.floor(Math.random() * 99));
+    var genderDigit = isMale
+      ? Math.floor(Math.random() * 5) * 2 + 1
+      : Math.floor(Math.random() * 5) * 2;
 
-    profileImage.src = "assets/moje_zdjecie.png";
-    profileImage.style.opacity = "1";
-    profileImage.style.display = "block";
-  } catch (err) {
-    console.error("Błąd ładowania zdjęcia:", err);
-  }
-}
+    var rawPesel = pYear + pMonthStr + pDayStr + randomDigits + genderDigit;
+    var weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3];
+    var sum = 0;
 
-let cameraStream = null;
-let cameraContainerEl = null;
-let cameraVideoEl = null;
-
-function closeCamera() {
-  try {
-    document.body.classList.remove("camera-open", "camera-opening");
-  } catch (_) {}
-  if (cameraStream) {
-    try {
-      cameraStream.getTracks().forEach((track) => track.stop());
-    } catch (_) {}
-    cameraStream = null;
-  }
-  if (cameraVideoEl) {
-    try {
-      cameraVideoEl.pause();
-      cameraVideoEl.srcObject = null;
-    } catch (_) {}
-  }
-  if (cameraContainerEl) {
-    try {
-      cameraContainerEl.style.display = "none";
-    } catch (_) {}
-  }
-}
-
-async function openCamera() {
-  if (!cameraContainerEl) cameraContainerEl = document.getElementById("camera-container");
-  if (!cameraVideoEl) cameraVideoEl = document.getElementById("camera-view");
-  if (!cameraContainerEl || !cameraVideoEl) {
-    window.location.href = "qr.html?scan=1";
-    return;
-  }
-  try {
-    document.body.classList.add("camera-opening", "camera-open");
-    cameraContainerEl.style.display = "block";
-  } catch (_) {}
-
-  if (cameraStream) {
-    try {
-      cameraStream.getTracks().forEach((track) => track.stop());
-    } catch (_) {}
-    cameraStream = null;
-  }
-
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    closeCamera();
-    alert("Twoja przeglądarka nie wspiera dostępu do aparatu.");
-    return;
-  }
-
-  try {
-    var stream;
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } } });
-    } catch (_) {
-      stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    for (var i = 0; i < 10; i++) {
+      sum += parseInt(rawPesel.charAt(i), 10) * weights[i];
     }
-    cameraVideoEl.srcObject = stream;
-    cameraStream = stream;
-    cameraVideoEl.play().catch(() => {});
-  } catch (error) {
-    alert("Nie można uzyskać dostępu do aparatu.");
-    closeCamera();
-  } finally {
-    document.body.classList.remove("camera-opening");
-  }
-}
 
-window.addEventListener("load", function () {
-  try { if (typeof checkInstallation === "function") checkInstallation(); } catch (e) {}
-  applyProfileImage();
-});
+    var controlDigit = (10 - (sum % 10)) % 10;
+    return rawPesel + controlDigit;
+  }
+
+  // Generowanie kompletnego zestawu danych
+  var isMale = Math.random() > 0.5;
+  var genderStr = isMale ? "MĘŻCZYZNA" : "KOBIETA";
+
+  var maleNames = ["JAKUB", "ANTONI", "SZYMON", "JAN", "FILIP", "KACPER", "ALEKSANDER"];
+  var femaleNames = ["ZOFIA", "ZUZANNA", "HANNA", "MAJA", "JULIA", "OLIWIA", "ALICJA"];
+  var maleSurnames = ["KOWALSKI", "WIŚNIEWSKI", "WÓJCIK", "KOWALCZYK", "KAMIŃSKI", "LEWANDOWSKI"];
+  var femaleSurnames = ["KOWALSKA", "WIŚNIEWSKA", "WÓJCIK", "KOWALCZYK", "KAMIŃSKA", "LEWANDOWSKA"];
+
+  var cities = [
+    { city: "WARSZAWA", code: "00-001", street: "UL. MARSZAŁKOWSKA 10/12" },
+    { city: "KRAKÓW", code: "30-001", street: "UL. FLORIANSKA 5" },
+    { city: "GDAŃSK", code: "80-001", street: "UL. DŁUGA 15/2" },
+    { city: "WROCŁAW", code: "50-001", street: "UL. ŚWIDNICKA 8" },
+    { city: "POZNAŃ", code: "60-001", street: "UL. PÓŁWIEJSKA 20" }
+  ];
+
+  var name = isMale ? maleNames[Math.floor(Math.random() * maleNames.length)] : femaleNames[Math.floor(Math.random() * femaleNames.length)];
+  var surname = isMale ? maleSurnames[Math.floor(Math.random() * maleSurnames.length)] : femaleSurnames[Math.floor(Math.random() * femaleSurnames.length)];
+  var fatherName = maleNames[Math.floor(Math.random() * maleNames.length)];
+  var motherName = femaleNames[Math.floor(Math.random() * femaleNames.length)];
+  var fatherSurname = maleSurnames[Math.floor(Math.random() * maleSurnames.length)];
+  var motherSurname = femaleSurnames[Math.floor(Math.random() * femaleSurnames.length)];
+  var loc = cities[Math.floor(Math.random() * cities.length)];
+
+  var year = Math.floor(Math.random() * (2004 - 1985 + 1)) + 1985;
+  var month = Math.floor(Math.random() * 12) + 1;
+  var day = Math.floor(Math.random() * 28) + 1;
+  var birthDateStr = pad(day) + "." + pad(month) + "." + year;
+
+  var validPesel = generateValidPesel(year, month, day, isMale);
+
+  var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var randomSeries = letters.charAt(Math.floor(Math.random() * 26)) + letters.charAt(Math.floor(Math.random() * 26)) + letters.charAt(Math.floor(Math.random() * 26));
+  var randomNumber = Math.floor(100050 + Math.random() * 899900);
+  var generatedIdSeries = randomSeries + " " + randomNumber;
+
+  var issueYear = year + 18 + Math.floor(Math.random() * 3);
+  var issueDateStr = pad(day) + "." + pad(month) + "." + issueYear;
+  var expiryDateStr = pad(day) + "." + pad(month) + "." + (issueYear + 10);
+
+  var defaultData = {
+    name: name,
+    surname: surname,
+    nationality: "POLSKIE",
+    birthDate: birthDateStr,
+    pesel: validPesel,
+    lastName: surname,
+    gender: genderStr,
+    fatherNameMain: fatherName,
+    motherNameMain: motherName,
+    fatherSurname: fatherSurname,
+    motherSurname: motherSurname,
+    placeOfBirth: loc.city,
+    address: loc.street,
+    postalcode: loc.code + " " + loc.city,
+    registrationDate: issueDateStr,
+    idSeriesMain: generatedIdSeries,
+    issueDateMain: issueDateStr,
+    expiryDateMain: expiryDateStr
+  };
+
+  Object.keys(defaultData).forEach(function (key) {
+    if (!localStorage.getItem(key)) {
+      localStorage.setItem(key, defaultData[key]);
+    }
+  });
+})();
 
 document.addEventListener("DOMContentLoaded", function () {
-  cameraContainerEl = document.getElementById("camera-container");
-  cameraVideoEl = document.getElementById("camera-view");
-  window.openCamera = openCamera;
-  window.closeCamera = closeCamera;
-
-  var notificationTimer = null;
-  var hideToast = function () {
-    var n = document.getElementById("notification");
-    if (!n) return;
-    if (notificationTimer) clearTimeout(notificationTimer);
-    n.classList.remove("show");
-    n.style.display = "none";
-  };
-
-  var showToast = function (msg, durationMs) {
-    var n = document.getElementById("notification");
-    if (!n) return;
-    var textEl = n.querySelector(".notification-text");
-    if (msg && textEl) textEl.textContent = msg;
-    n.style.display = "block";
-    setTimeout(() => n.classList.add("show"), 10);
-    if (notificationTimer) clearTimeout(notificationTimer);
-    notificationTimer = setTimeout(() => hideToast(), durationMs || 3000);
-  };
-
-  var closeBtn = document.querySelector("#notification .notification-close");
-  if (closeBtn) closeBtn.addEventListener("click", () => hideToast());
-
-  applyProfileImage();
-
-  // Formatowanie danych
   var up = (s) => (s ? String(s).toLocaleUpperCase("pl") : s);
   var formatDateDots = function (val) {
     if (!val) return val;
@@ -144,100 +114,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+  // Pełna lista mapowania pól z localStorage do HTML
   [
     { id: "display-name", key: "name", formatter: up },
     { id: "display-surname", key: "surname", formatter: up },
     { id: "display-nationality", key: "nationality", formatter: up },
     { id: "display-birthDate", key: "birthDate", formatter: formatDateDots },
     { id: "display-pesel", key: "pesel", formatter: up },
+    { id: "idSeriesMain", key: "idSeriesMain", formatter: up },
+    { id: "expiryDateMain", key: "expiryDateMain", formatter: formatDateDots },
+    { id: "issueDateMain", key: "issueDateMain", formatter: formatDateDots },
+    { id: "fathernameMain", key: "fatherNameMain", formatter: up },
+    { id: "mothernameMain", key: "motherNameMain", formatter: up },
     { id: "lastName", key: "lastName", formatter: up },
     { id: "gender", key: "gender", formatter: up },
     { id: "fatherSurname", key: "fatherSurname", formatter: up },
     { id: "motherSurname", key: "motherSurname", formatter: up },
     { id: "placeOfBirth", key: "placeOfBirth", formatter: up },
     { id: "address", key: "address", formatter: up },
-    { id: "postalcode", key: "postalcode" },
+    { id: "postalcode", key: "postalcode", formatter: up },
     { id: "registrationDate", key: "registrationDate", formatter: formatDateDots }
   ].forEach((item) => {
     setText(item.id, localStorage.getItem(item.key), { formatter: item.formatter });
   });
-
-  // Obsługa Kopiowania
-  var copyToClipboard = function (text, msg) {
-    if (!text || text === "Brak danych") {
-      showToast("Brak danych do skopiowania");
-      return;
-    }
-    navigator.clipboard.writeText(text).then(() => showToast(msg || "Skopiowano do schowka"));
-  };
-
-  var btnMain = document.getElementById("kopiujMain");
-  if (btnMain) {
-    btnMain.addEventListener("click", function () {
-      var t = document.getElementById("idSeriesMain")?.textContent || "";
-      copyToClipboard(t.replace("Kopiuj", "").trim(), "Skopiowano serię i numer mDowodu");
-    });
-  }
-
-  // Obsługa Aktualizacji
-  var pad = (n) => (n < 10 ? "0" + n : "" + n);
-  var getNowDate = function () {
-    var d = new Date();
-    return pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + d.getFullYear();
-  };
-
-  var lastUpdateEl = document.getElementById("sukadziwkakurwa");
-  var btnUpdate = document.getElementById("aktualizuj");
-
-  var savedDate = localStorage.getItem("lastUpdateDate");
-  if (savedDate && lastUpdateEl) lastUpdateEl.textContent = savedDate;
-
-  if (btnUpdate && lastUpdateEl) {
-    btnUpdate.addEventListener("click", function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var now = getNowDate();
-      lastUpdateEl.textContent = now;
-      localStorage.setItem("lastUpdateDate", now);
-      showToast("Dokument został zaktualizowany");
-    });
-  }
-
-  // Obsługa Rozwijania "Twoje dodatkowe dane"
-  const lo = document.querySelector("#extra-toggle");
-  const content = document.querySelector("#extra-content");
-  const arrow = document.querySelector("#extra-arrow");
-
-  if (lo && content) {
-    let isOpen = false;
-    content.style.display = "none";
-
-    lo.addEventListener("click", function () {
-      isOpen = !isOpen;
-      if (isOpen) {
-        content.style.display = "block";
-        lo.style.borderRadius = "12px 12px 0px 0px";
-        if (arrow) arrow.src = "assets/icons/ab007_chevron_up.svg";
-      } else {
-        content.style.display = "none";
-        lo.style.borderRadius = "12px";
-        if (arrow) arrow.src = "assets/icons/ab008_chevron_down.svg";
-      }
-    });
-  }
 });
-
-// Zegar na żywo
-const czasEl = document.querySelector(".czas");
-function updateClockNow() {
-  const now = new Date();
-  const pad = (n) => (n < 10 ? `0${n}` : `${n}`);
-  if (czasEl) {
-    czasEl.textContent = `Czas: ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} ${pad(now.getDate())}.${pad(now.getMonth() + 1)}.${now.getFullYear()}`;
-  }
-}
-if (czasEl) {
-  updateClockNow();
-  setInterval(updateClockNow, 1000);
-}
-
